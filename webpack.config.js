@@ -1,4 +1,5 @@
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config = {
   entry: './src/index.js', // relative file path
@@ -13,11 +14,17 @@ const config = {
         test: /\.js$/, // pattern matching for the files this rule applies to
       },
       {
-        use: ['style-loader', 'css-loader'], // apply first style-loader then css-loader
+        loader: ExtractTextPlugin.extract({ // legacy syntax because of ExtractTextPlugin
+          loader: 'css-loader',
+        }),
         test: /\.css$/,
       },
     ],
   },
+  plugins: [
+    // save all src caught by the above rule to a new style.css file
+    new ExtractTextPlugin('style.css'),
+  ],
 };
 
 module.exports = config;
