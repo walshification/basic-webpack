@@ -1,5 +1,11 @@
-import sum from './sum';
-import './image_viewer'; // imported just so it will run
+const button = document.createElement('button');
+button.innerText = 'Click me';
+button.onclick = () => {
+  // asks server for the given module to dynamically load it
+  System.import('./image_viewer').then(module => {
+    // access the default export of the imported module
+    module.default();
+  });
+};
 
-const total = sum(10, 5);
-console.log(total);
+document.body.appendChild(button);
